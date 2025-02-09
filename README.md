@@ -5,7 +5,7 @@ This API provides endpoints for managing products in a database. It supports ope
 ## Base URL
 
 All endpoints are relative to the base URL:
-https://yourdomain.com/api/products
+https://localhost:3000/api/products
 
 
 ## Endpoints
