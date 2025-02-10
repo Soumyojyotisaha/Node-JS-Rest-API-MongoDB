@@ -214,3 +214,4 @@ Content-Type: application/json
 
 All endpoints return a 500 Internal Server Error with a message if an unexpected error occurs:
 
+mongodb+srv://soumyojyotisaha2021:Soumyo@2001@cluster0.7g7yo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
