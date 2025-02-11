@@ -88,16 +88,14 @@ const bulkDeleteProducts = async (req, res) => {
   }
 };
 
-// Search and filter products
+// Search products by price range
+// Search products by price range
 const searchProducts = async (req, res) => {
   try {
-    const { name, minPrice, maxPrice } = req.query;
+    const { minPrice, maxPrice } = req.query;
     let filter = {};
 
-    if (name) {
-      filter.name = { $regex: name, $options: "i" }; // Case-insensitive search
-    }
-
+    // Apply price range filters
     if (minPrice && maxPrice) {
       filter.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
     } else if (minPrice) {
@@ -106,12 +104,22 @@ const searchProducts = async (req, res) => {
       filter.price = { $lte: parseFloat(maxPrice) };
     }
 
+    // Fetch products based on the filter
     const products = await Product.find(filter);
+
+    // Check if products were found
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found within the given price range.' });
+    }
+
+    // Return the found products
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // Insert multiple products at once
 const bulkInsertProducts = async (req, res) => {
@@ -123,15 +131,17 @@ const bulkInsertProducts = async (req, res) => {
   }
 };
 
-// Get the total count of products
+// Get the total count of products  
 const countProducts = async (req, res) => {
-    try {
-      const count = await Product.countDocuments(); // Count all documents in the Product collection
-      res.status(200).json({ totalProducts: count });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
+  try {
+    const count= await Product.countDocuments(); // Count all documents in the Product collection
+    res.status(200).json({ totalProducts: count });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 // Reduce stock quantity after a purchase
 const reduceStock = async (req, res) => {

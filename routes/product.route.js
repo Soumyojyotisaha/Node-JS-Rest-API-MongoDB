@@ -13,6 +13,9 @@ const {
   bulkDeleteProducts,
 } = require("../controllers/product.controller.js");
 
+// Search route should be placed first to avoid conflicts
+router.get("/search", searchProducts);
+
 // Product CRUD operations
 router.get("/", getProducts);
 router.get("/:id", getProduct);
@@ -21,9 +24,8 @@ router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 
 // Additional features
-router.get("/search", searchProducts);
 router.post("/bulk", bulkInsertProducts);
-router.get("/count", countProducts);
+router.get("/product-count", countProducts); // Updated route name to avoid conflicts
 router.patch("/:id/reduce-stock", reduceStock);
 
 // Bulk delete route
