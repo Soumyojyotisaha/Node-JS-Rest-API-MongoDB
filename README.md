@@ -213,5 +213,5 @@ Content-Type: application/json
 ## Error Responses
 
 All endpoints return a 500 Internal Server Error with a message if an unexpected error occurs:
-
+https://drive.google.com/drive/folders/1o2gGBlC1abbm0BcshxxKzm8eVWs0WslZ?usp=sharing
 mongodb+srv://soumyojyotisaha2021:Soumyo@2001@cluster0.7g7yo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
