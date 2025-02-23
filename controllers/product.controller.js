@@ -65,30 +65,6 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-// Bulk Delete products
-const bulkDeleteProducts = async (req, res) => {
-  try {
-    const { ids } = req.body; // Array of product IDs to delete
-
-    // Validate if the IDs array is not empty
-    if (!ids || ids.length === 0) {
-      return res.status(400).json({ message: "No product IDs provided." });
-    }
-
-    // Delete products matching the provided IDs
-    const deletedProducts = await Product.deleteMany({ _id: { $in: ids } });
-
-    if (deletedProducts.deletedCount === 0) {
-      return res.status(404).json({ message: "No products found to delete." });
-    }
-
-    res.status(200).json({ message: `${deletedProducts.deletedCount} products deleted successfully.` });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Search products by price range
 // Search products by price range
 const searchProducts = async (req, res) => {
   try {
@@ -131,18 +107,6 @@ const bulkInsertProducts = async (req, res) => {
   }
 };
 
-// Get the total count of products  
-const countProducts = async (req, res) => {
-  try {
-    const count= await Product.countDocuments(); // Count all documents in the Product collection
-    res.status(200).json({ totalProducts: count });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-
-
 // Reduce stock quantity after a purchase
 const reduceStock = async (req, res) => {
   try {
@@ -170,12 +134,10 @@ module.exports = {
   getProducts,
   getProduct,
   createProduct,
-  updateProduct,
-  updateProduct,
+  updateProduct,  
   deleteProduct,
-  bulkDeleteProducts,
   searchProducts,
   bulkInsertProducts,
-  countProducts,
   reduceStock,
 };
+

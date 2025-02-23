@@ -6,6 +6,11 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter product name"],
     },
+    type: {
+      type: String,
+      enum: ["phone", "tablet", "laptop", "accessory"],
+      required: [true, "Please specify the product type"],
+    },
     quantity: {
       type: Number,
       required: true,

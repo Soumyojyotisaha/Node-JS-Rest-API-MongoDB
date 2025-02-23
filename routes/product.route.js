@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const {
   getProducts,
   getProduct,
@@ -8,27 +7,21 @@ const {
   deleteProduct,
   searchProducts,
   bulkInsertProducts,
-  countProducts,
   reduceStock,
-  bulkDeleteProducts,
 } = require("../controllers/product.controller.js");
+const authMiddleware = require("../middlewares/auth.middleware.js"); // Import auth middleware
 
-// Search route should be placed first to avoid conflicts
+const router = express.Router();
+
 router.get("/search", searchProducts);
-
-// Product CRUD operations
 router.get("/", getProducts);
 router.get("/:id", getProduct);
-router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
 
-// Additional features
-router.post("/bulk", bulkInsertProducts);
-router.get("/product-count", countProducts); // Updated route name to avoid conflicts
-router.patch("/:id/reduce-stock", reduceStock);
-
-// Bulk delete route
-router.post("/bulk-delete", bulkDeleteProducts);
+// Protected Routes (Only Suppliers Can Modify Data)
+router.post("/", authMiddleware, createProduct);
+router.put("/:id", authMiddleware, updateProduct);
+router.delete("/:id", authMiddleware, deleteProduct);
+router.post("/bulk-insert", authMiddleware, bulkInsertProducts); // Protected: Bulk insert
+router.put("/reduce-stock/:id", authMiddleware, reduceStock); // Protected: Reduce stock
 
 module.exports = router;
